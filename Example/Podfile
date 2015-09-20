@@ -1,0 +1,13 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'TimeCamouflage_Example', :exclusive => true do
+  pod "TimeCamouflage", :path => "../"
+end
+
+target 'TimeCamouflage_Tests', :exclusive => true do
+  pod "TimeCamouflage", :path => "../"
+
+  pod 'Quick', '~> 0.3.1'
+  pod 'Nimble'
+end
