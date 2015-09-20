@@ -1,0 +1,6 @@
+framework module TimeCamouflage {
+  umbrella header "TimeCamouflage-umbrella.h"
+
+  export *
+  module * { export * }
+}
