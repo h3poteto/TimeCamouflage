@@ -8,16 +8,10 @@
 
 import Foundation
 
-
-//
-//  TimeCamouflage.swift
-//  TimeCamouflage
-//
-//  Created by akirafukushima on 2015/09/20.
-//  Copyright © 2015年 h3poteto. All rights reserved.
-//
-
-import Foundation
+class TimeCamouflage {
+    func Time() {
+    }
+}
 
 
 extension NSDate {
@@ -28,20 +22,42 @@ extension NSDate {
     // クラス変数として保存しておく値
     private struct ClassProperty {
         static var TravelTime = NSTimeInterval(0)
+        static var CurreentDate: NSDate?
     }
     
     class var TravelTime: NSTimeInterval {
         get {
-        return ClassProperty.TravelTime
+            return ClassProperty.TravelTime
         }
         set(travel) {
             ClassProperty.TravelTime = travel
         }
     }
+    class var CurrentDate: NSDate? {
+        get {
+            return ClassProperty.CurreentDate
+        }
+        set(date) {
+            ClassProperty.CurreentDate = date
+        }
+     }
     
-    convenience init(travelTime: NSTimeInterval) {
+    class func TravelDate() -> NSDate {
+        guard let date = CurrentDate else {
+            return NSDate()
+        }
+        
+        return date.dateByAddingTimeInterval(TravelTime)
+    }
+    
+    convenience init(date: NSDate?, travelTime: NSTimeInterval) {
         self.init()
         self.dynamicType.TravelTime = travelTime
+        if date == nil {
+            self.dynamicType.CurrentDate = NSDate()
+        } else {
+            self.dynamicType.CurrentDate = date
+        }
         self.overrideClassMethod("dateWithTimeIntervalSinceNow:", new: "travelDateWithTimeIntervalSinceNow:")
         self.overrideInstanceMethod("timeIntervalSinceNow", new: "travelTimeIntervalSinceNow")
     }
@@ -60,7 +76,17 @@ extension NSDate {
         method_exchangeImplementations(originalMethod, newMethod)
     }
     
-    func travelTimeIntervalSinceNow() {
+    func travelTimeIntervalSinceNow() -> NSTimeInterval {
+        return self.timeIntervalSinceDate(self.dynamicType.TravelDate())
         
+    }
+    
+    func travelDateFromString(dateString: String, timeZone: NSTimeZone) -> NSDate {
+        let formatter = NSDateFormatter()
+        let locale = NSLocale(localeIdentifier: "en_US")
+        formatter.locale = locale
+        formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        formatter.timeZone = timeZone
+        return formatter.dateFromString(dateString)!
     }
 }

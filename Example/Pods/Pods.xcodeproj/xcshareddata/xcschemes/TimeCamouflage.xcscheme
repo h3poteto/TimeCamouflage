@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9E51588DC1D7CBA63CEAB86F"
+               BlueprintIdentifier = "B851886BF69ADF43E54CDA76"
                BuildableName = "TimeCamouflage.framework"
                BlueprintName = "TimeCamouflage"
                ReferencedContainer = "container:Pods.xcodeproj">
